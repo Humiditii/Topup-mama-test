@@ -15,9 +15,11 @@ export class CharacterController {
     @Query('sort') sort:Sort,
     @Query('filter') filter:Gender
   ):Promise<Response>{
-    const charInfo = await this.characterService.getCharacters(id,sort,filter)
+    const [charInfo,metadata] = await this.characterService.getCharacters(id,sort,filter)
+    res.header['metadata'] = metadata
     return res.status(200).json({
       message: 'characters details fetched!',
+      metadata:res.header['metadata'],
       data: charInfo
     })
   }
