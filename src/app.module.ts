@@ -18,7 +18,7 @@ import {ConfigService} from '@nestjs/config';
         type: 'postgres',
         host: configService.get('DB_HOST'),
         port: +configService.get<number>('DB_PORT'),
-        ssl:configService.get<string>('NODE_ENV') === 'production' ? true :false,
+        ssl:configService.get<string>('NODE_ENV') === 'production' ? {rejectUnauthorized:false}:false ,
         username: configService.get('DB_USERNAME'),
         password: configService.get('DB_PASSWORD'),
         database: configService.get('DB_NAME'),
