@@ -68,5 +68,7 @@ Nest is [MIT licensed](LICENSE).
 
 Heroku server using Posgres
 
-[BASE_URL](https://topup-mama.herokuapp.com/)
-[DOCS](https://topup-mama.herokuapp.com/docs)
+Base url [BASE_URL](https://topup-mama.herokuapp.com/)
+
+
+Documentation [DOCS](https://topup-mama.herokuapp.com/docs)
