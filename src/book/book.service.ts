@@ -40,7 +40,6 @@ export class BookService {
       const {data,status}: {data:[], status:number} = await this.httpService.axiosRef.get(this.configService.get('BASE_URL')+'/books/'+id)
 
       const [comments,count] = await this.commentService.bookComment(id,true)
-      console.log(comments)
       return {
         book:data,
         Comment: {
