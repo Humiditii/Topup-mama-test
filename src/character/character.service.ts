@@ -88,7 +88,10 @@ export class CharacterService {
       }
 
     } catch (error) {
-      throw new HttpException('Internal Server error', 500)
+      const err = {
+        message: error.response.statusText?error.response.statusText:"Internal Server Error",
+        code: error.response.status ? error.response.status : 500 }
+      throw new HttpException(err.message, err.code)
     }
   }
 
@@ -105,6 +108,13 @@ export class CharacterService {
   }
 
   metadataFunc(param:{}[]):MetaData{
+    param.map( (e)=>{
+      const age = {
+        died: e['died'] ==='' ? e ['died'] : 0,
+        born: e['born'] ==='' ? e['born'] : 0
+      }
+
+    })
     return {
       totalAge:0,
       totalCharacters:param.length

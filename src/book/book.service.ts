@@ -26,10 +26,12 @@ export class BookService {
       return fetched
 
     } catch (error) {
-      throw new HttpException('Internal Server error', 500)
+      const err = { 
+        message: error.response.statusText?error.response.statusText:"Internal Server Error",
+        code: error.response.status ? error.response.status : 500 }
+      throw new HttpException(err.message, err.code)
     }
   }
-
 
   async findOne(id: number) {
     try {
@@ -37,6 +39,7 @@ export class BookService {
       const {data,status}: {data:[], status:number} = await this.httpService.axiosRef.get(this.configService.get('BASE_URL')+'/books/'+id)
 
       const [comments,count] = await this.commentService.bookComment(id,true)
+      console.log(comments)
       return {
         book:data,
         Comment: {
@@ -46,7 +49,10 @@ export class BookService {
       }
 
     } catch (error) {
-      throw new HttpException('Internal Server error', 500)
+      const err = {
+        message: error.response.statusText?error.response.statusText:"Internal Server Error",
+        code: error.response.status ? error.response.status : 500 }
+      throw new HttpException(err.message, err.code)
     }
   }
 }

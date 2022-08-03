@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateCommentDto } from './dto/create-comment.dto';
@@ -12,24 +12,37 @@ export class CommentService {
   ){}
 
   async create(createCommentDto: CreateCommentDto):Promise<Comment>{
-    const new_comment = new Comment()
-    for (const key in createCommentDto) {
-      new_comment[key] = createCommentDto[key]
+    try {
+      const new_comment = new Comment()
+      for (const key in createCommentDto) {
+        new_comment[key] = createCommentDto[key]
+      }
+      return this.commentRepo.save(new_comment)
+    } catch (error) {
+      const err = {
+        message: error.response.statusText?error.response.statusText:"Internal Server Error",
+        code: error.response.status ? error.response.status : 500 }
+      throw new HttpException(err.message, err.code) 
     }
-    return this.commentRepo.save(new_comment)
   }
 
 
   async bookComment(book_id: number, count?:boolean):Promise<[Comment[], number]> {
-    const comments = await this.commentRepo.find({
-      where: {
-        book_id:book_id
-      },
-      order: {
-        id: 'DESC'
-      }
-    })
-    return [comments, count? comments.length: null]
+    try {
+      const comments = await this.commentRepo.find({
+        where: {
+          book_id:book_id
+        },
+        order: {
+          id: 'DESC'
+        }
+      })
+      return [comments, count? comments.length: null]
+    } catch (error) {
+      const err = { message: error.response.statusText?error.response.statusText:"Internal Server Error",
+    code: error.response.status ? error.response.status : 500 }
+      throw new HttpException(err.message, err.code) 
+    }
   }
 
 
