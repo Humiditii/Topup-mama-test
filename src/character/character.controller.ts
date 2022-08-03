@@ -12,8 +12,8 @@ export class CharacterController {
   async getBookCharacter(
     @Res() res: Response,
     @Param('id') id:number,
-    @Query('sort') sort:Sort,
-    @Query('filter') filter:Gender
+    @Query('sort') sort?:Sort,
+    @Query('filter') filter?:Gender
   ):Promise<Response>{
     const [charInfo,metadata] = await this.characterService.getCharacters(id,sort,filter)
     res.header['metadata'] = metadata

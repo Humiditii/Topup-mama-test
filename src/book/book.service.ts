@@ -28,7 +28,7 @@ export class BookService {
 
     } catch (error) {
       const err = { 
-        message: error.response.statusText?error.response.statusText:"Internal Server Error",
+        message: error.response.statusText?error.response?.statusText:"Internal Server Error",
         code: error.response.status ? error.response.status : 500 }
       throw new HttpException(err.message, err.code)
     }
@@ -51,7 +51,7 @@ export class BookService {
 
     } catch (error) {
       const err = {
-        message: error.response.statusText?error.response.statusText:"Internal Server Error",
+        message: error.response.statusText?error.response?.statusText:"Internal Server Error",
         code: error.response.status ? error.response.status : 500 }
       throw new HttpException(err.message, err.code)
     }

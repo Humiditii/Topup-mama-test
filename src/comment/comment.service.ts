@@ -20,7 +20,7 @@ export class CommentService {
       return this.commentRepo.save(new_comment)
     } catch (error) {
       const err = {
-        message: error.response.statusText?error.response.statusText:"Internal Server Error",
+        message: error.response.statusText?error.response?.statusText:"Internal Server Error",
         code: error.response.status ? error.response.status : 500 }
       throw new HttpException(err.message, err.code) 
     }
@@ -39,7 +39,7 @@ export class CommentService {
       })
       return [comments, count? comments.length: null]
     } catch (error) {
-      const err = { message: error.response.statusText?error.response.statusText:"Internal Server Error",
+      const err = { message: error.response.statusText?error.response?.statusText:"Internal Server Error",
     code: error.response.status ? error.response.status : 500 }
       throw new HttpException(err.message, err.code) 
     }
